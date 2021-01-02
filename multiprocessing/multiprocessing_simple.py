@@ -16,14 +16,14 @@ class SampleProcess(Process):
 
     def run(self):
         # do some work here
-        logging.debug(f'running process id={self.id}')
+        logging.debug(f'Running process id={self.id}')
         r = random.uniform(0, 5)
         time.sleep(r)
         self.queue.put(f'Process id={self.id} finished running in {r} seconds')
 
 if __name__ == '__main__':
     
-    print('starting processes')
+    logging.debug('Starting processes')
     # Create a list to hold running SampleProcess object instances...
     processes = list()
     # Build a single queue to send to all process objects...
@@ -34,10 +34,10 @@ if __name__ == '__main__':
         processes.append(p)
 
     # wait until all processes are finished
-    print('waiting for all processes to finish running')
+    logging.debug('Waiting for all processes to finish running')
     [proc.join() for proc in processes]
 
-    print('all processes are finished running')
-    print('results')
+    logging.debug('All processes are finished running')
+    logging.debug('Results')
     while not q.empty():
-        print (q.get())
+        logging.debug(q.get())

@@ -19,26 +19,26 @@ def run(obj):
     A dummy function which takes an object and does some processing.
     In this examples, it just waits random amount of time and returns a sample string.
     """
-    logging.debug(f'running process id={obj.id}')
+    logging.debug(f'Running process id={obj.id}')
     r = random.uniform(0, 5)
     time.sleep(r)
-    return (f'process id={obj.id} took {r} seconds to run')
+    return (f'Process id={obj.id} took {r} seconds to run')
 
 if __name__ == '__main__':
     
-    print(f'Number of cpu: {multiprocessing.cpu_count()}')
-    print(f'Pool size: {POOL_SIZE}')
-    print(f'Number of processes: {NUMBER_OF_PROCESSES}')
+    logging.debug(f'Number of cpu: {multiprocessing.cpu_count()}')
+    logging.debug(f'Pool size: {POOL_SIZE}')
+    logging.debug(f'Number of processes: {NUMBER_OF_PROCESSES}')
 
     objs = []
     for i in range(NUMBER_OF_PROCESSES):
         objs.append(SampleObject(id=i))
     
-    print('starting processes')
+    logging.debug('Starting processes')
     with Pool(processes = POOL_SIZE) as pool:
         res = pool.map(run, objs)
     
-    print('all processes are finished running')
-    print('results:')
+    logging.debug('All processes are finished running')
+    logging.debug('Results:')
     for r in res:
-        print(r)
+        logging.debug(r)

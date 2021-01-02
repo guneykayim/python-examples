@@ -20,7 +20,7 @@ class SimpleDataType():
         self.data.append(d)
 
     def printData(self):
-        print(f'data: {self.data}')
+        logging.debug(f'data: {self.data}')
 
 class SampleProcess(Process):
     def __init__(self, shared_data, lock, queue=None, id=None, kwargs=None):
@@ -38,7 +38,7 @@ class SampleProcess(Process):
         there should be a lock protection as multiple different processes can try to access the shared data at the same time
         """
 
-        logging.debug(f'running process id={self.id}')
+        logging.debug(f'Running process id={self.id}')
         r = random.uniform(0, 5)
         time.sleep(r)
         self.lock.acquire()
@@ -56,7 +56,7 @@ if __name__ == '__main__':
     # create an instance of SimpleDataType class using multiprocessing.BaseManager
     shared_data = manager.SimpleDataType()
 
-    print('starting processes')
+    logging.debug('Starting processes')
 
     # create a list to hold running SampleProcess object instances
     processes = list()
@@ -73,14 +73,14 @@ if __name__ == '__main__':
         processes.append(p)
 
     # wait until all processes are finished
-    print('waiting for all processes to finish running')
+    logging.debug('waiting for all processes to finish running')
     [proc.join() for proc in processes]
 
-    print('all processes are finished running')
+    logging.debug('all processes are finished running')
 
     # we'll see that shared_data is populated with random access from processes based on how long it took them to process
     shared_data.printData()
     
-    print('results')
+    logging.debug('results')
     while not q.empty():
-        print (q.get())
+        logging.debug(q.get())
